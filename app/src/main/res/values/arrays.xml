@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="settings_list_preferences_tittles">
+        <item>Abrir Notificaciones</item>
+        <item>Cerrar Notificaciones</item>
+        <item>Subir Brillo</item>
+        <item>Bajar Brillo</item>
+        <item>Linterna</item>
+        <item>Abrir Aplicacion</item>
+        <item>Nada</item>
+    </string-array>
+
+    <string-array name="settings_list_preferences_values">
+        <item>AbrirNotificaciones</item>
+        <item>CerrarNotificaciones</item>
+        <item>SubirBrillo</item>
+        <item>BajarBrillo</item>
+        <item>Linterna</item>
+        <item>AbrirAplicacion</item>
+        <item>Nada</item>
+    </string-array>
+
+</resources>

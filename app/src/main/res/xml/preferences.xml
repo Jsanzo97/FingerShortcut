@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Ajustes generales">
+        <SwitchPreference
+            android:key="switch"
+            android:id="@+id/sw"
+            android:title="Activar FingerShortCut"
+            android:summaryOn="FingerShortCut esta activado"
+            android:summaryOff="FingerShortCut esta desactivado"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="checkbox"
+            android:title="Activar notificacion"
+            android:defaultValue="true"
+            android:summary="Mantener una notificacion activa en la barra de tareas" />
+
+        <CheckBoxPreference
+            android:key="checkboxCamara"
+            android:title="Activar FingerShortcut en la camara"
+            android:defaultValue="false"
+            android:summary="Desliza en cualquier direccion para hacer una foto cuando estes usando la camara" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Gestos con la huella">
+        <ListPreference
+            android:key="listArriba"
+            android:summary="Nada"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:title="Deslizar Arriba" />
+
+        <ListPreference
+            android:key="listArriba2"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Arriba 2 veces" />
+
+        <ListPreference
+            android:key="listAbajo"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Abajo" />
+
+        <ListPreference
+            android:key="listAbajo2"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Abajo 2 veces" />
+
+        <ListPreference
+            android:key="listDerecha"
+            android:summary="Nada"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:title="Deslizar derecha" />
+
+        <ListPreference
+            android:key="listDerecha2"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Derecha 2 veces" />
+
+        <ListPreference
+            android:key="listIzquierda"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Izquierda" />
+
+        <ListPreference
+            android:key="listIzquierda2"
+            android:defaultValue="Nada"
+            android:dialogTitle="Elegir accion"
+            android:entries="@array/settings_list_preferences_tittles"
+            android:entryValues="@array/settings_list_preferences_values"
+            android:summary="Nada"
+            android:title="Deslizar Izquierda 2 veces" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
