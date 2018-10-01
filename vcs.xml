@@ -10,6 +10,10 @@
           <option name="url" value="https://github.com/V2Ray-Android/Actinium.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="http://gitlab.inf.uva.es" />
+          <option name="userName" value="jorgsan" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\jorge\AndroidStudioProjects\PruebaFP" />
