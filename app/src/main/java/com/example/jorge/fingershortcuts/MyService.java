@@ -1,7 +1,9 @@
 package com.example.jorge.fingershortcuts;
 
+import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.FingerprintGestureController;
+import android.app.Activity;
 import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -14,6 +16,8 @@ import android.net.Uri;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -140,20 +144,15 @@ public class MyService extends AccessibilityService {
     }
 
     private void deslizSimple(String pref1){
-        //if(appActual.endsWith(Activity.CAMERA_SERVICE) && prefs.getBoolean("checkboxCamara", true)){
-        //    if (ContextCompat.checkSelfPermission(MainActivity.getApp().getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED &&
-        //        ContextCompat.checkSelfPermission(MainActivity.getApp().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-        //        ActivityCompat.requestPermissions(MainActivity.getApp(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-        //    }else{
-        //        Utilities.hacerFoto();
-        //    }
-        //}else{*/
+        if(appActual.endsWith(Activity.CAMERA_SERVICE) && prefs.getBoolean("checkboxCamara", true)){
+            Utilities.hacerFoto();
+        }else{
             dispatcher(pref1);
-        //}
+        }
     }
 
     private void deslizDoble(String pref1, String pref2){
-        if(appActual.equals("com.android.camera") && prefs.getBoolean("checkboxCamara", true)){
+        if(appActual.endsWith(Activity.CAMERA_SERVICE) && prefs.getBoolean("checkboxCamara", true)){
             return;
         }else{
             if(pref2.equals("Nada")){

@@ -1,5 +1,6 @@
 package com.example.jorge.fingershortcuts;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.content.Context;
@@ -19,6 +20,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -181,6 +184,18 @@ public class MainActivity extends AppCompatActivity{
         tiempoPrimerClick = System.currentTimeMillis();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        /*if(requestCode == Utilities.CAMARA_PHOTO_REQUEST){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Preference camara = SettingsFragment.getInstance().findPreference("checkboxCamara");
+            BitmapDrawable bd = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(imageBitmap, 95, 95, true));
+            camara.setIcon(bd);
+        }*/
+        showMessage("xrctvybuknlmñ");
+    }
+
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
         private static SettingsFragment settings;
@@ -213,7 +228,6 @@ public class MainActivity extends AppCompatActivity{
 
         private void actualizarSummaryAfterPause(){
             Map<String, ?> ajustes = getPreferenceManager().getSharedPreferences().getAll();
-
             for(Map.Entry<String, ?> entry : ajustes.entrySet()){
                 actualizarSummary(findPreference(entry.getKey()), entry.getValue());
             }
@@ -271,6 +285,10 @@ public class MainActivity extends AppCompatActivity{
                 }else if(preference.getKey().equals("checkboxCamara")){
                     preference.setIcon(R.drawable.camera);
                     if((Boolean) value){
+                        if (ContextCompat.checkSelfPermission(MainActivity.getInstance().getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED &&
+                                ContextCompat.checkSelfPermission(MainActivity.getInstance().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                            ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                        }
                         if(!comprobarUsage()){
                         MainActivity.getInstance().showMessage("Conceda acceso de uso a FingerShortcut, por favor");
                             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);

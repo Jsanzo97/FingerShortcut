@@ -1,60 +1,42 @@
 package com.example.jorge.fingershortcuts;
 
-import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class Utilities extends AppCompatActivity{
 
-    public static int REQUEST_IMAGE_CAP = 1;
-    private static String currentPhotoPath;
+    public static int CAMARA_PHOTO_REQUEST = 1;
 
-    /*public static void hacerFoto() {
-        System.out.println("Haciendo foto");
-        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePicture.resolveActivity(MainActivity.getApp().getPackageManager()) != null) {
-            File photoFile = crearFoto();
-            if (photoFile != null) {
-                Uri photoUri = FileProvider.getUriForFile(MainActivity.getApp().getApplicationContext(), MainActivity.getApp().getPackageName(), photoFile);
-                takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                MainActivity.getApp().startActivityForResult(takePicture, REQUEST_IMAGE_CAP);
-                guardarFoto();
-            }
+    public static void hacerFoto() {
+        String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/FingerShortcutCam";
+        String fileName = dir + System.currentTimeMillis() + ".jpg";
+        File newFile = new File(fileName);
+        try{
+            newFile.createNewFile();
+        } catch (IOException ex){
+            ex.printStackTrace();
         }
-        System.out.println("Foto hecha: " + currentPhotoPath);
+        Uri output = FileProvider.getUriForFile(MainActivity.getInstance().getApplicationContext(), MainActivity.getInstance().getApplicationContext().getPackageName(), newFile);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, output);
+        System.out.println("Hacer foto");
+        MainActivity.getInstance().startActivityForResult(cameraIntent, CAMARA_PHOTO_REQUEST);
     }
-
-    private static File crearFoto(){
-        File image = null;
-        try {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String fileName = "IMG_" + timeStamp + "_";
-            File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            image = File.createTempFile(fileName, ".jpg", storageDir);
-            currentPhotoPath = image.getAbsolutePath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-
-    public static void guardarFoto(){
-        System.out.println("Guardando");
-        Intent mediaScan = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScan.setData(contentUri);
-        MainActivity.getApp().sendBroadcast(mediaScan);
-        System.out.println("Guardado: " + currentPhotoPath);
-    }*/
 
     public static void lanzarApp(MyService service, String name){
         if(!name.equals("Nada")){
