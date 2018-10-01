@@ -1,0 +1,8 @@
+<application>
+  <component name="LanguageInjectionConfiguration">
+    <injection language="XML" injector-id="java">
+      <display-name>Builder.setColor (android.app.Notification)</display-name>
+      <place><![CDATA[psiParameter().ofMethod(0, psiMethod().withName("setColor").withParameters("int").definedInClass("android.app.Notification.Builder"))]]></place>
+    </injection>
+  </component>
+</application>
