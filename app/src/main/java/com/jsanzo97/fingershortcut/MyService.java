@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.FingerprintGestureController;
 import android.app.Activity;
 import android.app.AppOpsManager;
+import android.app.Instrumentation;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -16,7 +17,9 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -26,6 +29,7 @@ import static android.accessibilityservice.FingerprintGestureController.FINGERPR
 import static android.accessibilityservice.FingerprintGestureController.FINGERPRINT_GESTURE_SWIPE_LEFT;
 import static android.accessibilityservice.FingerprintGestureController.FINGERPRINT_GESTURE_SWIPE_RIGHT;
 import static android.accessibilityservice.FingerprintGestureController.FINGERPRINT_GESTURE_SWIPE_UP;
+import static android.content.ContentValues.TAG;
 
 public class MyService extends AccessibilityService {
 
@@ -232,8 +236,18 @@ public class MyService extends AccessibilityService {
     }
 
     @Override
-    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
+    public void onAccessibilityEvent(AccessibilityEvent event) {
         appActual = comprobarPackageAcutual();
+        AccessibilityNodeInfo nodo = event.getSource();
+        if(nodo != null) {
+            nodo.refresh();
+            System.out.println(nodo.getPackageName() + " " + nodo.getChildCount());
+            for (int i = 0; i < nodo.getChildCount(); i++) {
+                if(nodo.getChild(i).getContentDescription() != null && nodo.getChild(i).getContentDescription().toString().startsWith("Bot")){
+                    System.out.println(nodo.getChild(i).getContentDescription() +" " + nodo.getChild(i).getViewIdResourceName());
+                }
+            }
+        }
     }
 
     @Override

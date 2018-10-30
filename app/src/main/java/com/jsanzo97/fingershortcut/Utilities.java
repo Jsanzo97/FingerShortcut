@@ -1,31 +1,36 @@
 package com.jsanzo97.fingershortcut;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.Instrumentation;
+import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.provider.DocumentsContract;
 import android.provider.Settings;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
-public class Utilities extends AppCompatActivity{
+import static android.content.Context.CAMERA_SERVICE;
+
+public class Utilities {
 
     public static int CAMARA_PHOTO_REQUEST = 1;
 
     public static void hacerFoto() {
 
     }
-
+    
     public static void lanzarApp(MyService service, String name){
         if(!name.equals("Nada")){
             Intent intent = new Intent(MainActivity.getInstance().getPackageManager().getLaunchIntentForPackage(name));

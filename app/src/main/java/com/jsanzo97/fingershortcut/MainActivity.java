@@ -184,18 +184,6 @@ public class MainActivity extends AppCompatActivity{
         tiempoPrimerClick = System.currentTimeMillis();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        /*if(requestCode == Utilities.CAMARA_PHOTO_REQUEST){
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Preference camara = SettingsFragment.getInstance().findPreference("checkboxCamara");
-            BitmapDrawable bd = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(imageBitmap, 95, 95, true));
-            camara.setIcon(bd);
-        }*/
-        showMessage("xrctvybuknlmñ");
-    }
-
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
         private static SettingsFragment settings;
