@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.jorge.fingershortcuts">
+    package="com.jsanzo97.fingershortcut">
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
@@ -13,6 +13,10 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DUMP"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature
         android:name="android.hardware.fingerprint"
@@ -51,7 +55,7 @@
 
         <provider
             android:name=".GenericFileProvider"
-            android:authorities="com.example.jorge.fingershortcuts"
+            android:authorities="com.jsanzo97.fingershortcut"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -60,6 +64,7 @@
         </provider>
 
         <activity android:name=".ListaIconos" />
+        <activity android:name=".ShowPhoto"></activity>
     </application>
 
 </manifest>
