@@ -49,9 +49,6 @@ class MainActivity : AppCompatActivity() {
         myService = MyService()
         serviceIntent = Intent(this, MyService::class.java)
 
-        n = Notificacion(this, true)
-        nb = n!!.getNotification1("Developed by Jsanzo97®", "FingerShortCut esta activado")
-
         main = this
     }
 
@@ -137,16 +134,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun mostrarNotificacion() {
-        n!!.notify(0, nb)
+        n!!.notify(0, nb!!)
     }
 
     fun ocultarNotificacion() {
-        n!!.manager.cancel(0)
+        n!!.manager?.cancel(0)
     }
 
     fun cambiarTextoNotificacion(texto: String?) {
         nb!!.setContentText(texto)
-        n!!.notify(0, nb)
+        n!!.notify(0, nb!!)
     }
 
     public override fun onResume() {
