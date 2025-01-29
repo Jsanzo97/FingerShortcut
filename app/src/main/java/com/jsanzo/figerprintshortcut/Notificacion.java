@@ -32,7 +32,7 @@ public class Notificacion extends ContextWrapper {
     }
 
     public Notification.Builder getNotification1(String title, String body) {
-        Intent intent = new Intent(Notificacion.this, MainActivityOld.class);
+        Intent intent = new Intent(Notificacion.this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(Notificacion.this, 0,intent, PendingIntent.FLAG_IMMUTABLE);
 
         return new Notification.Builder(getApplicationContext(), CHANNEL_ONE_ID)

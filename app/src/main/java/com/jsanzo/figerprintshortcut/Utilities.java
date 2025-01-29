@@ -31,17 +31,17 @@ public class Utilities extends AppCompatActivity {
         } catch (IOException ex){
             ex.printStackTrace();
         }
-        Uri output = FileProvider.getUriForFile(MainActivityOld.getInstance().getApplicationContext(), MainActivityOld.getInstance().getApplicationContext().getPackageName(), newFile);
+        Uri output = FileProvider.getUriForFile(MainActivity.Companion.getInstance().getApplicationContext(), MainActivity.Companion.getInstance().getApplicationContext().getPackageName(), newFile);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, output);
         System.out.println("Hacer foto");
-        MainActivityOld.getInstance().startActivityForResult(cameraIntent, CAMARA_PHOTO_REQUEST);
+        MainActivity.Companion.getInstance().startActivityForResult(cameraIntent, CAMARA_PHOTO_REQUEST);
     }
 
     public static void lanzarApp(MyService service, String name){
         if(!name.equals("Nada")){
-            Intent intent = new Intent(MainActivityOld.getInstance().getPackageManager().getLaunchIntentForPackage(name));
-            MainActivityOld.getInstance().startActivity(intent);
+            Intent intent = new Intent(MainActivity.Companion.getInstance().getPackageManager().getLaunchIntentForPackage(name));
+            MainActivity.Companion.getInstance().startActivity(intent);
             Utilities.cerrarNotificaciones(service);
         }
     }
@@ -107,8 +107,8 @@ public class Utilities extends AppCompatActivity {
     }
 
     public static void cambiarBrillo(int brillo){
-        ContentResolver c = MainActivityOld.getInstance().getApplicationContext().getContentResolver();
-        if(Settings.System.canWrite(MainActivityOld.getInstance().getApplicationContext())) {
+        ContentResolver c = MainActivity.Companion.getInstance().getApplicationContext().getContentResolver();
+        if(Settings.System.canWrite(MainActivity.Companion.getInstance().getApplicationContext())) {
             Settings.System.putInt(c, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
             try {
                 int brilloActual = Settings.System.getInt(c, Settings.System.SCREEN_BRIGHTNESS);
