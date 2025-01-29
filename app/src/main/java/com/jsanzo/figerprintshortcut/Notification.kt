@@ -9,7 +9,13 @@ import android.content.ContextWrapper
 import android.content.Intent
 
 class Notificacion(base: Context?, private val onGoing: Boolean) : ContextWrapper(base) {
-    private var notifManager: NotificationManager? = null
+
+    private var manager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+    companion object {
+        const val CHANNEL_ONE_ID: String = "ONE"
+        const val CHANNEL_ONE_NAME: String = "Service status reminder"
+    }
 
     init {
         createChannels()
@@ -25,14 +31,11 @@ class Notificacion(base: Context?, private val onGoing: Boolean) : ContextWrappe
         notificationChannel.setShowBadge(false)
         notificationChannel.vibrationPattern = null
         notificationChannel.lockscreenVisibility = Notification.VISIBILITY_SECRET
-        manager!!.createNotificationChannel(notificationChannel)
+        manager.createNotificationChannel(notificationChannel)
     }
 
     fun getNotification(title: String?, body: String?): Notification.Builder {
-        val intent = Intent(
-            this@Notificacion,
-            MainActivity::class.java
-        )
+        val intent = Intent(this@Notificacion, MainActivity::class.java)
         val pendingIntent =
             PendingIntent.getActivity(this@Notificacion, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
@@ -46,20 +49,11 @@ class Notificacion(base: Context?, private val onGoing: Boolean) : ContextWrappe
             .setAutoCancel(false)
     }
 
-    fun notify(id: Int, notification: Notification.Builder) {
-        manager!!.notify(id, notification.build())
+    fun showNotification(id: Int, notification: Notification.Builder) {
+        manager.notify(id, notification.build())
     }
 
-    val manager: NotificationManager?
-        get() {
-            if (notifManager == null) {
-                notifManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            }
-            return notifManager
-        }
-
-    companion object {
-        const val CHANNEL_ONE_ID: String = "ONE"
-        const val CHANNEL_ONE_NAME: String = "Channel One"
+    fun hideNotification(id: Int) {
+        manager.cancel(id)
     }
 }

@@ -14,8 +14,8 @@ import com.jsanzo.figerprintshortcut.ui.MainActivityScreen
 
 class MainActivity : ComponentActivity() {
 
-    lateinit var notificacion: Notificacion
-    lateinit var notificacionBuilder: Builder
+    private lateinit var notification: Notificacion
+    private lateinit var notificationBuilder: Builder
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +32,8 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        notificacion = Notificacion(this, true);
-        notificacionBuilder = notificacion.getNotification("Developed by Jsanzo97®", "FingerShortCut esta activado");
+        notification = Notificacion(this, true);
+        notificationBuilder = notification.getNotification("Developed by Jsanzo97®", "FingerShortCut esta activado");
 
 
         /*
@@ -118,7 +118,7 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             showMessage("Active FingerShortCut, por favor")
-            notificacion.notify(0, notificacionBuilder)
+            notification.showNotification(0, notificationBuilder)
         }
     }
 
@@ -127,7 +127,7 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             showMessage("Desactive FingerShortCut, por favor")
-            notificacion.manager?.cancel(0)
+            notification.hideNotification(0)
         }
     }
 
@@ -136,8 +136,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun cambiarTextoNotificacion(texto: String?) {
-        notificacionBuilder.setContentText(texto)
-        notificacion.notify(0, notificacionBuilder)
+        notificationBuilder.setContentText(texto)
+        notification.showNotification(0, notificationBuilder)
     }
 
     public override fun onResume() {
