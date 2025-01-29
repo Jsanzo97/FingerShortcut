@@ -28,7 +28,7 @@ class Notificacion(base: Context?, private val onGoing: Boolean) : ContextWrappe
         manager!!.createNotificationChannel(notificationChannel)
     }
 
-    fun getNotification1(title: String?, body: String?): Notification.Builder {
+    fun getNotification(title: String?, body: String?): Notification.Builder {
         val intent = Intent(
             this@Notificacion,
             MainActivity::class.java

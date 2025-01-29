@@ -28,15 +28,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MainActivityScreen() {
+fun MainActivityScreen(
+    enableService: (value: Boolean) -> Unit,
+    enableNotification: (value: Boolean) -> Unit,
+    enableInCamera: (value: Boolean) -> Unit,
+    onSlideUp: () -> Unit,
+    onSlideDown: () -> Unit,
+    onSlideLeft: () -> Unit,
+    onSlideRight: () -> Unit,
+) {
     MainActivityLayout(
-        enableService = {},
-        enableNotification = {},
-        enableInCamera = {},
-        onSlideUp = {},
-        onSlideDown = {},
-        onSlideLeft = {},
-        onSlideRight = {}
+        enableService = enableService,
+        enableNotification = enableNotification,
+        enableInCamera = enableInCamera,
+        onSlideUp = onSlideUp,
+        onSlideDown = onSlideDown,
+        onSlideLeft = onSlideLeft,
+        onSlideRight = onSlideRight
     )
 }
 
@@ -53,10 +61,6 @@ fun MainActivityLayout(
     var serviceEnabled by remember { mutableStateOf(false) }
     var notificationEnabled by remember { mutableStateOf(false) }
     var inCameraEnabled by remember { mutableStateOf(false) }
-
-    LaunchedEffect(serviceEnabled) { enableService(serviceEnabled) }
-    LaunchedEffect(notificationEnabled) { enableNotification(notificationEnabled) }
-    LaunchedEffect(inCameraEnabled) { enableInCamera(inCameraEnabled) }
 
     Column(
         modifier = Modifier
@@ -80,6 +84,7 @@ fun MainActivityLayout(
                     checked = serviceEnabled,
                     onCheckedChange = { value ->
                         serviceEnabled = value
+                        enableService(value)
                     }
                 )
             }
@@ -95,6 +100,7 @@ fun MainActivityLayout(
                     checked = notificationEnabled,
                     onCheckedChange = { value ->
                         notificationEnabled = value
+                        enableNotification(value)
                     }
                 )
             }
@@ -110,6 +116,7 @@ fun MainActivityLayout(
                     checked = inCameraEnabled,
                     onCheckedChange = { value ->
                         inCameraEnabled = value
+                        enableInCamera(value)
                     }
                 )
             }

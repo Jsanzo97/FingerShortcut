@@ -6,6 +6,7 @@ import android.accessibilityservice.FingerprintGestureController.FingerprintGest
 import android.app.AppOpsManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -43,11 +44,16 @@ class MyService : AccessibilityService() {
         p.setEnabled(true);
 
          */
+
+        /*
         MainActivity.getInstance().cambiarTextoNotificacion("FingerShortCut esta activado")
         initGesture()
+
+         */
     }
 
     private fun initGesture() {
+        /*
         val mGestureController = fingerprintGestureController
         mIsGestureDetectionAvailable = mGestureController.isGestureDetectionAvailable
 
@@ -55,7 +61,7 @@ class MyService : AccessibilityService() {
             return
         }
 
-        val prefs = MainActivity.SettingsFragment.instance.getPrefs()
+        val prefs = SettingsFragment.instance.getPrefs()
 
         val mFingerprintGestureCallback: FingerprintGestureCallback =
             object : FingerprintGestureCallback() {
@@ -117,18 +123,21 @@ class MyService : AccessibilityService() {
             }
 
         mGestureController.registerFingerprintGestureCallback(mFingerprintGestureCallback, null)
+
+         */
     }
 
     private fun comprobarAccesoEscribirAjustes() {
-        if (!Settings.System.canWrite(MainActivity.getInstance().getApplicationContext())) {
+        if (!Settings.System.canWrite(applicationContext)) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
             intent.setData(Uri.parse("package:" + this.packageName))
-            MainActivity.getInstance().showMessage("Permita modificar ajustes a FingerShortCut")
+            //MainActivity.getInstance().showMessage("Permita modificar ajustes a FingerShortCut")
             startActivity(intent)
         }
     }
 
     private fun deslizSimple(pref1: String) {
+        /*
         val prefs = MainActivity.SettingsFragment.instance.getPrefs()
 
         if (appActual!!.endsWith(CAMERA_SERVICE) && prefs!!.getBoolean("checkboxCamara", true)) {
@@ -136,9 +145,12 @@ class MyService : AccessibilityService() {
         } else {
             dispatcher(pref1)
         }
+
+         */
     }
 
     private fun deslizDoble(pref1: String, pref2: String) {
+        /*
         val prefs = MainActivity.SettingsFragment.instance.getPrefs()
 
         if (appActual!!.endsWith(CAMERA_SERVICE) && prefs!!.getBoolean("checkboxCamara", true)) {
@@ -150,10 +162,13 @@ class MyService : AccessibilityService() {
                 dispatcher(pref2)
             }
         }
+
+         */
     }
 
     private fun dispatcher(action: String) {
-        val prefs = MainActivity.SettingsFragment.instance.getPrefs()
+        /*
+        val prefs = SettingsFragment.instance.getPrefs()
 
         when (action) {
             "SubirBrillo" -> {
@@ -183,6 +198,8 @@ class MyService : AccessibilityService() {
             "Nada" -> {}
             else -> Log.d("Dispatcher", "Unknown action")
         }
+
+         */
     }
 
     /*public boolean getBarStatus(){
@@ -193,6 +210,7 @@ class MyService : AccessibilityService() {
         this.barStatus = barStatus;
     }*/
     private fun comprobarPackageAcutual(): String {
+        /*
         var currentApp = "Null"
         if (comprobarUsage()) {
             val usm = MainActivity.getInstance()
@@ -211,6 +229,9 @@ class MyService : AccessibilityService() {
             }
         }
         return currentApp
+
+         */
+        return ""
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
@@ -230,6 +251,7 @@ class MyService : AccessibilityService() {
     }
 
     override fun onDestroy() {
+        /*
         MainActivity.getInstance().cambiarTextoNotificacion("FingerShortCut esta desactivado")
         val prefs = PreferenceManager.getDefaultSharedPreferences(
             MainActivity.getInstance().applicationContext
@@ -240,6 +262,8 @@ class MyService : AccessibilityService() {
         MainActivity.SettingsFragment.instance.findPreference("checkboxCamara")
             .setEnabled(false)
         super.onDestroy()
+
+         */
     }
 
     override fun onInterrupt() {
@@ -247,12 +271,11 @@ class MyService : AccessibilityService() {
     }
 
     companion object {
-        fun comprobarUsage(): Boolean {
+        fun comprobarUsage(context: Context): Boolean {
             try {
-                val m: MainActivity = MainActivity.getInstance()
-                val packageManager: PackageManager = m.packageManager
-                val applicationInfo = packageManager.getApplicationInfo(m.packageName, 0)
-                val appOpsManager = m.getSystemService(APP_OPS_SERVICE) as AppOpsManager
+                val packageManager: PackageManager = context.packageManager
+                val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
+                val appOpsManager = context.getSystemService(APP_OPS_SERVICE) as AppOpsManager
                 val mode = appOpsManager.checkOpNoThrow(
                     AppOpsManager.OPSTR_GET_USAGE_STATS,
                     applicationInfo.uid,

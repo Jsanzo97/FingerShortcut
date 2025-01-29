@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class IconsList : AppCompatActivity() {
@@ -48,8 +49,9 @@ class IconsList : AppCompatActivity() {
             holdLayout.addView(image1)
             holdLayout.addView(data)
             holdLayout.setOnClickListener {
-                MainActivity.getInstance()
-                    .showMessage("Elegiste: " + rInfo.activityInfo.applicationInfo.loadLabel(pm))
+
+                showToast("Elegiste: " + rInfo.activityInfo.applicationInfo.loadLabel(pm))
+                /*
                 val editor = MainActivity.SettingsFragment.instance.getPrefs()?.edit()!!
                 editor.putString("appShortcutPackage", rInfo.activityInfo.packageName)
                 editor.apply()
@@ -59,12 +61,14 @@ class IconsList : AppCompatActivity() {
                 )
                 editor.apply()
                 finish()
+
+                 */
             }
 
             (l1 as ViewGroup).addView(holdLayout)
         }
 
-        MainActivity.getInstance().showMessage("Seleccione una")
+        showToast("Seleccione una")
     }
 
     private fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
@@ -79,12 +83,32 @@ class IconsList : AppCompatActivity() {
         return bmp
     }
 
+    fun showToast(texto: String?) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(
+            R.layout.custom_toast,
+            findViewById<View>(R.id.custom_toast_container) as ViewGroup
+        )
+
+        val text = layout.findViewById<TextView>(R.id.text)
+        text.text = texto
+
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+    }
+
     override fun onBackPressed() {
+        /*
         val editor = MainActivity.SettingsFragment.instance.getPrefs()?.edit()!!
         editor.putString("appShortcutPackage", "Nada")
         editor.apply()
         editor.putString("appShortcutName", "Nada")
         editor.apply()
+        super.onBackPressed()
+
+         */
         super.onBackPressed()
     }
 }

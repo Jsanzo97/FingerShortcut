@@ -10,7 +10,6 @@ import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.jsanzo.figerprintshortcut.MainActivity.Companion.getInstance
 import java.io.File
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
@@ -20,6 +19,7 @@ object Utilities : AppCompatActivity() {
     var CAMARA_PHOTO_REQUEST: Int = 1
 
     fun hacerFoto() {
+        /*
         val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             .toString() + "/FingerShortcutCam"
         val fileName = dir + System.currentTimeMillis() + ".jpg"
@@ -38,14 +38,19 @@ object Utilities : AppCompatActivity() {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, output)
         println("Hacer foto")
         getInstance().startActivityForResult(cameraIntent, CAMARA_PHOTO_REQUEST)
+
+         */
     }
 
     fun lanzarApp(service: MyService, name: String) {
+        /*
         if (name != "Nada") {
             val intent = Intent(getInstance().packageManager.getLaunchIntentForPackage(name))
             getInstance().startActivity(intent)
             cerrarNotificaciones(service)
         }
+
+         */
     }
 
     fun linterna(service: MyService, cameraStatus: Boolean): Boolean {
@@ -128,6 +133,7 @@ object Utilities : AppCompatActivity() {
     }
 
     fun cambiarBrillo(brillo: Int) {
+        /*
         val c = getInstance().applicationContext.contentResolver
         if (Settings.System.canWrite(getInstance().applicationContext)) {
             Settings.System.putInt(
@@ -166,5 +172,7 @@ object Utilities : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
+         */
     }
 }
