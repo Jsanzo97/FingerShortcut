@@ -50,7 +50,7 @@ class IconsList : AppCompatActivity() {
             holdLayout.setOnClickListener {
                 MainActivity.getInstance()
                     .showMessage("Elegiste: " + rInfo.activityInfo.applicationInfo.loadLabel(pm))
-                val editor = MainActivity.SettingsFragment.getInstance().prefs.edit()
+                val editor = MainActivity.SettingsFragment.instance.getPrefs()?.edit()!!
                 editor.putString("appShortcutPackage", rInfo.activityInfo.packageName)
                 editor.apply()
                 editor.putString(
@@ -80,7 +80,7 @@ class IconsList : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val editor = MainActivity.SettingsFragment.getInstance().prefs.edit()
+        val editor = MainActivity.SettingsFragment.instance.getPrefs()?.edit()!!
         editor.putString("appShortcutPackage", "Nada")
         editor.apply()
         editor.putString("appShortcutName", "Nada")

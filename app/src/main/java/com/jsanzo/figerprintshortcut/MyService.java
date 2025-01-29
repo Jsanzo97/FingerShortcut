@@ -17,7 +17,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -55,12 +54,15 @@ public class MyService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         System.out.println("CONECTADO");
-        prefs = MainActivity.SettingsFragment.getInstance().getPrefs();
+        prefs = MainActivityOld.SettingsFragment.getInstance().getPrefs();
 
-        Preference p = MainActivity.SettingsFragment.getInstance().findPreference("checkboxCamara");
+        /*
+        Preference p = MainActivityOld.SettingsFragment.getInstance().findPreference("checkboxCamara");
         p.setEnabled(true);
 
-        MainActivity.getInstance().cambiarTextoNotificacion("FingerShortCut esta activado");
+         */
+
+        MainActivityOld.getInstance().cambiarTextoNotificacion("FingerShortCut esta activado");
         initGesture();
     }
 
@@ -133,10 +135,10 @@ public class MyService extends AccessibilityService {
     }
 
     private void comprobarAccesoEscribirAjustes(){
-        if(!Settings.System.canWrite(MainActivity.getInstance().getApplicationContext())){
+        if(!Settings.System.canWrite(MainActivityOld.getInstance().getApplicationContext())){
             Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
             intent.setData(Uri.parse("package:"+this.getPackageName()));
-            MainActivity.getInstance().showMessage("Permita modificar ajustes a FingerShortCut");
+            MainActivityOld.getInstance().showMessage("Permita modificar ajustes a FingerShortCut");
             startActivity(intent);
         }
     }
@@ -203,7 +205,7 @@ public class MyService extends AccessibilityService {
     private String comprobarPackageAcutual() {
         String currentApp = "Null";
         if(comprobarUsage()) {
-            UsageStatsManager usm = (UsageStatsManager) MainActivity.getInstance().getSystemService(Context.USAGE_STATS_SERVICE);
+            UsageStatsManager usm = (UsageStatsManager) MainActivityOld.getInstance().getSystemService(Context.USAGE_STATS_SERVICE);
             long time = System.currentTimeMillis();
             List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time);
             if (appList != null && appList.size() > 0) {
@@ -221,7 +223,7 @@ public class MyService extends AccessibilityService {
 
     public static boolean comprobarUsage() {
         try {
-            MainActivity m = MainActivity.getInstance();
+            MainActivityOld m = MainActivityOld.getInstance();
             PackageManager packageManager = m.getPackageManager();
             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(m.getPackageName(), 0);
             AppOpsManager appOpsManager =(AppOpsManager) m.getSystemService(Context.APP_OPS_SERVICE);
@@ -249,12 +251,12 @@ public class MyService extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-        MainActivity.getInstance().cambiarTextoNotificacion("FingerShortCut esta desactivado");
-        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.getInstance().getApplicationContext());
+        MainActivityOld.getInstance().cambiarTextoNotificacion("FingerShortCut esta desactivado");
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivityOld.getInstance().getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("switch", false);
         editor.apply();
-        MainActivity.SettingsFragment.getInstance().findPreference("checkboxCamara").setEnabled(false);
+        MainActivityOld.SettingsFragment.getInstance().findPreference("checkboxCamara").setEnabled(false);
         super.onDestroy();
     }
 
