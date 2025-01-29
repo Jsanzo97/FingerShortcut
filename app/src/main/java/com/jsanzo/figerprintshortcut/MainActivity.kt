@@ -26,11 +26,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.jsanzo.figerprintshortcut.ui.MainActivityScreen
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     private var serviceIntent: Intent? = null
     private var myService: MyService? = null
 
@@ -40,16 +43,25 @@ class MainActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main);
+        setContent {
+            MainActivityScreen()
+        }
+
+        /*
         if (fragmentManager.findFragmentById(android.R.id.content) == null) {
             fragmentManager.beginTransaction().add(android.R.id.content, SettingsFragment())
                 .commit()
         }
 
+         */
+
+        /*
         myService = MyService()
         serviceIntent = Intent(this, MyService::class.java)
 
         main = this
+
+         */
     }
 
     fun isAccessibilityOn(context: Context, clazz: Class<*>): Boolean {
@@ -148,6 +160,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onResume() {
         super.onResume()
+        /*
         val editor = prefs!!.edit()
         if (!isMyServiceRunning(MyService::class.java)) {
             editor.putBoolean("switch", false)
@@ -156,6 +169,8 @@ class MainActivity : AppCompatActivity() {
             editor.putBoolean("switch", true)
             editor.apply()
         }
+
+         */
     }
 
     override fun onBackPressed() {
@@ -183,9 +198,13 @@ class MainActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragment(), OnSharedPreferenceChangeListener {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
+
+            addPreferencesFromResource(R.xml.preferences)
+
+            /*
             preferenceManager.sharedPreferencesName = "settings"
             preferenceManager.sharedPreferencesMode = MODE_PRIVATE
-            addPreferencesFromResource(R.xml.preferences)
+
             prefs = preferenceScreen.sharedPreferences
             settings = this
 
@@ -200,6 +219,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             actualizarSummaryAfterPause()
+
+             */
+
         }
 
         private fun actualizarSummaryAfterPause() {
@@ -387,13 +409,19 @@ class MainActivity : AppCompatActivity() {
 
         override fun onResume() {
             super.onResume()
+            /*
             actualizarSummaryAfterPause()
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+             */
         }
 
         override fun onPause() {
             super.onPause()
+            /*
             preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+
+             */
         }
 
         companion object {
