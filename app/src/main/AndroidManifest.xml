@@ -73,7 +73,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ListaIconos" />
+        <activity android:name=".IconsList" />
         <activity android:name=".ShowPhoto" />
 
 
