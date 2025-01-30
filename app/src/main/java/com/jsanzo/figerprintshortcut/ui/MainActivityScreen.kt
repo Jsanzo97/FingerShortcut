@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainActivityScreen(
     enableService: (value: Boolean) -> Unit,
-    enableNotification: (value: Boolean) -> Unit,
+    enableQuickSettings: (value: Boolean) -> Unit,
     enableInCamera: (value: Boolean) -> Unit,
     onSlideUp: () -> Unit,
     onSlideDown: () -> Unit,
@@ -39,7 +39,7 @@ fun MainActivityScreen(
 ) {
     MainActivityLayout(
         enableService = enableService,
-        enableNotification = enableNotification,
+        enableQuickSettings = enableQuickSettings,
         enableInCamera = enableInCamera,
         onSlideUp = onSlideUp,
         onSlideDown = onSlideDown,
@@ -51,7 +51,7 @@ fun MainActivityScreen(
 @Composable
 fun MainActivityLayout(
     enableService: (value: Boolean) -> Unit,
-    enableNotification: (value: Boolean) -> Unit,
+    enableQuickSettings: (value: Boolean) -> Unit,
     enableInCamera: (value: Boolean) -> Unit,
     onSlideUp: () -> Unit,
     onSlideDown: () -> Unit,
@@ -93,14 +93,14 @@ fun MainActivityLayout(
         RowDivider()
 
         SettingsRow(
-            title = "Activar notificacion",
-            description = "Mantener una notificacion activa en la barra de tareas",
+            title = "Añadir menu rapido",
+            description = "Añade un acceso rapido en la barra de notificaciones",
             trailElement = {
-                Checkbox(
+                Switch(
                     checked = notificationEnabled,
                     onCheckedChange = { value ->
                         notificationEnabled = value
-                        enableNotification(value)
+                        enableQuickSettings(value)
                     }
                 )
             }
@@ -112,7 +112,7 @@ fun MainActivityLayout(
             title = "Activar FingerShortcut en la camara",
             description = "Desliza en cualquier direccion para hacer una foto cuando estes usando la camara",
             trailElement = {
-                Checkbox(
+                Switch(
                     checked = inCameraEnabled,
                     onCheckedChange = { value ->
                         inCameraEnabled = value
@@ -215,7 +215,7 @@ fun RowDivider() {
 fun MainActivityLayoutPreview() {
     MainActivityLayout(
         enableService = {},
-        enableNotification = {},
+        enableQuickSettings = {},
         enableInCamera = {},
         onSlideUp = {},
         onSlideDown = {},

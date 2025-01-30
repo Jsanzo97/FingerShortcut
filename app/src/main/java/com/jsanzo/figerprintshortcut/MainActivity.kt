@@ -1,10 +1,13 @@
 package com.jsanzo.figerprintshortcut
 
 import android.app.ActivityManager
+import android.app.StatusBarManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Icon
+import android.os.Build
 import android.os.Bundle
-import android.app.Notification.Builder
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
 import android.text.TextUtils.SimpleStringSplitter
@@ -12,10 +15,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.jsanzo.figerprintshortcut.ui.MainActivityScreen
 
+
 class MainActivity : ComponentActivity() {
 
-    private lateinit var notification: Notificacion
-    private lateinit var notificationBuilder: Builder
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MainActivityScreen(
                 enableService = { value -> if (value) enableService() else disableService() },
-                enableNotification = {},
+                enableQuickSettings = { addQuickSettings() },
                 enableInCamera = {},
                 onSlideUp = {},
                 onSlideDown = {},
@@ -32,8 +34,6 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        notification = Notificacion(this, true);
-        notificationBuilder = notification.getNotification("Developed by Jsanzo97®", "FingerShortCut esta activado");
 
 
         /*
@@ -44,13 +44,22 @@ class MainActivity : ComponentActivity() {
 
          */
 
-        /*
-        myService = MyService()
-        serviceIntent = Intent(this, MyService::class.java)
+    }
 
-        main = this
+    fun addQuickSettings() {
+        startService(Intent(this, QuickSettingsService::class.java))
 
-         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            val statusBarManager: StatusBarManager = getSystemService(StatusBarManager::class.java)
+            statusBarManager.requestAddTileService(
+                ComponentName(this, QuickSettingsService::class.java),
+                "FingerShortcut",
+                Icon.createWithResource(this, R.drawable.ic_action_name),
+                {},
+                {}
+            )
+         }
     }
 
     fun isAccessibilityOn(context: Context, clazz: Class<*>): Boolean {
@@ -90,7 +99,6 @@ class MainActivity : ComponentActivity() {
                 return true
             }
         }
-        cambiarTextoNotificacion("FingerShortCut esta desactivado")
         return false
     }
 
@@ -118,7 +126,6 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             showMessage("Active FingerShortCut, por favor")
-            notification.showNotification(0, notificationBuilder)
         }
     }
 
@@ -127,17 +134,11 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivity(intent)
             showMessage("Desactive FingerShortCut, por favor")
-            notification.hideNotification(0)
         }
     }
 
     private fun showMessage(message: String?) {
         showToast(message)
-    }
-
-    private fun cambiarTextoNotificacion(texto: String?) {
-        notificationBuilder.setContentText(texto)
-        notification.showNotification(0, notificationBuilder)
     }
 
     public override fun onResume() {
